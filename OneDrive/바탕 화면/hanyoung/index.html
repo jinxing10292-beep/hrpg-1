@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sword Merge Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header with game title and gold display -->
+        <header class="game-header">
+            <h1 class="game-title">Sword Merge Game</h1>
+            <div id="gold-display" class="gold-display">
+                <span class="gold-label">Gold: </span>
+                <span id="gold-amount" class="gold-amount">0</span>
+            </div>
+        </header>
+
+        <main class="game-main">
+            <!-- Inventory section with 5x5 grid -->
+            <section id="inventory-section" class="inventory-section">
+                <h2 class="section-title">Inventory</h2>
+                
+                <!-- 5x5 inventory grid container -->
+                <div id="inventory-grid" class="inventory-grid">
+                    <!-- Grid slots will be dynamically generated (25 slots) -->
+                </div>
+                
+                <!-- Utility buttons -->
+                <div id="inventory-controls" class="inventory-controls">
+                    <button id="sort-btn" class="utility-btn sort-btn" type="button">
+                        Sort Inventory
+                    </button>
+                    <button id="sell-all-btn" class="utility-btn sell-all-btn" type="button">
+                        Sell All
+                    </button>
+                </div>
+            </section>
+
+            <!-- Sidebar with shop, quests, and achievements -->
+            <aside id="sidebar" class="sidebar">
+                <!-- Shop section with purchase buttons -->
+                <section id="shop-section" class="shop-section">
+                    <h2 class="section-title">Shop</h2>
+                    <div class="shop-items">
+                        <button id="buy-sword-btn" class="shop-btn buy-sword-btn" type="button">
+                            <span class="shop-item-name">Buy Sword</span>
+                            <span class="shop-item-cost">20 Gold</span>
+                        </button>
+                        <button id="buy-lucky-box-btn" class="shop-btn buy-lucky-box-btn" type="button">
+                            <span class="shop-item-name">Buy Lucky Box</span>
+                            <span class="shop-item-cost">100 Gold</span>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Quest panel with quest list -->
+                <section id="quest-section" class="quest-section">
+                    <h2 class="section-title">Quests</h2>
+                    <div id="quest-list" class="quest-list">
+                        <!-- Quest items will be dynamically generated -->
+                    </div>
+                </section>
+
+                <!-- Achievement panel with achievement list -->
+                <section id="achievement-section" class="achievement-section">
+                    <h2 class="section-title">Achievements</h2>
+                    <div id="achievement-list" class="achievement-list">
+                        <!-- Achievement items will be dynamically generated -->
+                    </div>
+                </section>
+            </aside>
+        </main>
+    </div>
+
+    <!-- Modal container for notifications and confirmations -->
+    <div id="modal-container" class="modal-container"></div>
+
+    <!-- JavaScript modules -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

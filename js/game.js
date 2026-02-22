@@ -19,11 +19,17 @@ class GameManager {
 
     setupEventListeners() {
         // 메인 메뉴
+        document.getElementById('play-ai-btn').addEventListener('click', () => this.startGame('ai'));
         document.getElementById('play-1v1-btn').addEventListener('click', () => this.startGame('1v1'));
         document.getElementById('play-1v1v1-btn').addEventListener('click', () => this.startGame('1v1v1'));
         document.getElementById('deck-btn').addEventListener('click', () => this.showDeckBuilder());
         document.getElementById('inventory-btn').addEventListener('click', () => this.showInventory());
         document.getElementById('stats-btn').addEventListener('click', () => this.showStats());
+
+        // AI 게임
+        document.getElementById('end-turn-btn-ai').addEventListener('click', () => this.endTurn());
+        document.getElementById('surrender-btn-ai').addEventListener('click', () => this.surrender());
+        document.getElementById('back-btn-ai').addEventListener('click', () => this.backToMenu());
 
         // 1v1 게임
         document.getElementById('end-turn-btn-1v1').addEventListener('click', () => this.endTurn());
@@ -52,7 +58,10 @@ class GameManager {
 
         // 화면 전환
         document.getElementById('main-screen').classList.remove('active');
-        if (mode === '1v1') {
+        if (mode === 'ai') {
+            document.getElementById('game-ai-screen').classList.add('active');
+            this.initGameAI();
+        } else if (mode === '1v1') {
             document.getElementById('game-1v1-screen').classList.add('active');
             this.initGame1v1();
         } else {
@@ -61,6 +70,29 @@ class GameManager {
         }
 
         showToast('게임 시작!', 'success');
+    }
+
+    initGameAI() {
+        // 덱 생성
+        const unitCards = [1, 2, 3, 4, 5, 6, 7, 8];
+        const spellCards = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122];
+        const testDeck = [...unitCards, ...spellCards];
+        cardManager.playerDeck = cardManager.createDeck(testDeck);
+        cardManager.opponentDeck = cardManager.createDeck(testDeck);
+
+        // 초기 손패 (5장)
+        for (let i = 0; i < 5; i++) {
+            const card = cardManager.playerDeck.shift();
+            cardManager.addToHand(card, true);
+            
+            const opponentCard = cardManager.opponentDeck.shift();
+            cardManager.addToHand(opponentCard, false);
+        }
+
+        document.getElementById('opponent-name-ai').textContent = 'AI';
+        this.updateUIAI();
+        this.renderHandAI();
+        this.setupCardClickHandlersAI();
     }
 
     initGame1v1() {
@@ -84,8 +116,6 @@ class GameManager {
         this.renderHand1v1();
         this.setupCardClickHandlers1v1();
     }
-
-    initGame1v1v1() {
         // 덱 생성
         const unitCards = [1, 2, 3, 4, 5, 6, 7, 8];
         const spellCards = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122];
@@ -114,6 +144,28 @@ class GameManager {
     renderHand1v1() {
         const playerHandEl = document.getElementById('player-hand-1v1');
         const opponentHandEl = document.getElementById('opponent-hand-1v1');
+
+        playerHandEl.innerHTML = '';
+        opponentHandEl.innerHTML = '';
+
+        cardManager.playerHand.forEach(card => {
+            const cardEl = cardManager.renderCard(card, false);
+            playerHandEl.appendChild(cardEl);
+        });
+
+        // 상대방 카드는 가려짐
+        cardManager.opponentHand.forEach((card, index) => {
+            const cardEl = document.createElement('div');
+            cardEl.className = 'card card-back';
+            cardEl.dataset.instanceId = card.instanceId;
+            cardEl.innerHTML = '🂠';
+            opponentHandEl.appendChild(cardEl);
+        });
+    }
+
+    renderHandAI() {
+        const playerHandEl = document.getElementById('player-hand-ai');
+        const opponentHandEl = document.getElementById('opponent-hand-ai');
 
         playerHandEl.innerHTML = '';
         opponentHandEl.innerHTML = '';
@@ -167,6 +219,20 @@ class GameManager {
 
     setupCardClickHandlers1v1() {
         const playerHandEl = document.getElementById('player-hand-1v1');
+        playerHandEl.addEventListener('click', (e) => {
+            const cardEl = e.target.closest('.card');
+            if (cardEl && !cardEl.classList.contains('card-back')) {
+                const instanceId = cardEl.dataset.instanceId;
+                const card = cardManager.playerHand.find(c => c.instanceId === instanceId);
+                if (card) {
+                    this.selectCard(card);
+                }
+            }
+        });
+    }
+
+    setupCardClickHandlersAI() {
+        const playerHandEl = document.getElementById('player-hand-ai');
         playerHandEl.addEventListener('click', (e) => {
             const cardEl = e.target.closest('.card');
             if (cardEl && !cardEl.classList.contains('card-back')) {
@@ -234,15 +300,25 @@ class GameManager {
         showToast(`${card.name}을(를) 시전했습니다`, 'success');
     }
 
-    applySpellEffect(spell) {
+    applySpellEffect(spell, isOpponent = false) {
         switch (spell.effect) {
             case 'heal':
-                this.playerHealth = Math.min(this.playerHealth + spell.value, 100);
-                showToast(`${spell.icon} ${spell.value} 체력 회복!`, 'success');
+                if (isOpponent) {
+                    this.opponentHealth = Math.min(this.opponentHealth + spell.value, 100);
+                    showToast(`${spell.icon} AI가 ${spell.value} 체력 회복!`, 'info');
+                } else {
+                    this.playerHealth = Math.min(this.playerHealth + spell.value, 100);
+                    showToast(`${spell.icon} ${spell.value} 체력 회복!`, 'success');
+                }
                 break;
             case 'damage':
-                this.opponentHealth -= spell.value;
-                showToast(`${spell.icon} 상대방에게 ${spell.value} 피해!`, 'success');
+                if (isOpponent) {
+                    this.playerHealth -= spell.value;
+                    showToast(`${spell.icon} AI가 당신에게 ${spell.value} 피해!`, 'warning');
+                } else {
+                    this.opponentHealth -= spell.value;
+                    showToast(`${spell.icon} 상대방에게 ${spell.value} 피해!`, 'success');
+                }
                 break;
             case 'shield':
                 showToast(`${spell.icon} 방어력 ${spell.value} 증가!`, 'success');
@@ -251,12 +327,22 @@ class GameManager {
                 showToast(`${spell.icon} 모든 유닛 공격력 +${spell.value}!`, 'success');
                 break;
             case 'aoe_damage':
-                this.opponentHealth -= spell.value;
-                showToast(`${spell.icon} 모든 적에게 ${spell.value} 피해!`, 'success');
+                if (isOpponent) {
+                    this.playerHealth -= spell.value;
+                    showToast(`${spell.icon} AI의 광역 공격! ${spell.value} 피해!`, 'warning');
+                } else {
+                    this.opponentHealth -= spell.value;
+                    showToast(`${spell.icon} 모든 적에게 ${spell.value} 피해!`, 'success');
+                }
                 break;
             case 'heal_all':
-                this.playerHealth = Math.min(this.playerHealth + spell.value, 100);
-                showToast(`${spell.icon} 모든 유닛 ${spell.value} 체력 회복!`, 'success');
+                if (isOpponent) {
+                    this.opponentHealth = Math.min(this.opponentHealth + spell.value, 100);
+                    showToast(`${spell.icon} AI의 모든 유닛 회복!`, 'info');
+                } else {
+                    this.playerHealth = Math.min(this.playerHealth + spell.value, 100);
+                    showToast(`${spell.icon} 모든 유닛 ${spell.value} 체력 회복!`, 'success');
+                }
                 break;
         }
     }
@@ -277,15 +363,33 @@ class GameManager {
     opponentTurn() {
         this.opponentMana = Math.min(this.opponentMana + 1, this.maxOpponentMana);
         
-        if (cardManager.opponentHand.length > 0 && Math.random() > 0.5) {
-            const randomCard = cardManager.opponentHand[
-                Math.floor(Math.random() * cardManager.opponentHand.length)
-            ];
+        // AI 전략: 더 똑똑한 카드 선택
+        const playableCards = cardManager.opponentHand.filter(card => card.cost <= this.opponentMana);
+        
+        if (playableCards.length > 0) {
+            // 우선순위: 유닛 > 스펠
+            const unitCards = playableCards.filter(c => c.type === 'unit');
+            const spellCards = playableCards.filter(c => c.type === 'spell');
             
-            if (this.opponentMana >= randomCard.cost) {
-                cardManager.removeFromHand(randomCard.instanceId, false);
-                cardManager.addToField(randomCard, false);
-                this.opponentMana -= randomCard.cost;
+            let cardToPlay = null;
+            
+            // 50% 확률로 유닛 배치
+            if (unitCards.length > 0 && Math.random() > 0.5) {
+                cardToPlay = unitCards[Math.floor(Math.random() * unitCards.length)];
+            } else if (spellCards.length > 0) {
+                cardToPlay = spellCards[Math.floor(Math.random() * spellCards.length)];
+            } else if (unitCards.length > 0) {
+                cardToPlay = unitCards[Math.floor(Math.random() * unitCards.length)];
+            }
+            
+            if (cardToPlay) {
+                cardManager.removeFromHand(cardToPlay.instanceId, false);
+                if (cardToPlay.type === 'unit') {
+                    cardManager.addToField(cardToPlay, false);
+                } else {
+                    this.applySpellEffect(cardToPlay, true);
+                }
+                this.opponentMana -= cardToPlay.cost;
             }
         }
 
@@ -312,7 +416,9 @@ class GameManager {
     endGame(playerWon) {
         this.gameActive = false;
         
-        if (this.gameMode === '1v1') {
+        if (this.gameMode === 'ai') {
+            document.getElementById('game-ai-screen').classList.remove('active');
+        } else if (this.gameMode === '1v1') {
             document.getElementById('game-1v1-screen').classList.remove('active');
         } else {
             document.getElementById('game-1v1v1-screen').classList.remove('active');
@@ -327,7 +433,9 @@ class GameManager {
     }
 
     updateUI() {
-        if (this.gameMode === '1v1') {
+        if (this.gameMode === 'ai') {
+            this.updateUIAI();
+        } else if (this.gameMode === '1v1') {
             this.updateUI1v1();
         } else {
             this.updateUI1v1v1();
@@ -335,10 +443,29 @@ class GameManager {
     }
 
     renderHand() {
-        if (this.gameMode === '1v1') {
+        if (this.gameMode === 'ai') {
+            this.renderHandAI();
+        } else if (this.gameMode === '1v1') {
             this.renderHand1v1();
         } else {
             this.renderHand1v1v1();
+        }
+    }
+
+    updateUIAI() {
+        document.getElementById('player-health-ai').style.width = `${(this.playerHealth / 100) * 100}%`;
+        document.getElementById('player-health-text-ai').textContent = `${this.playerHealth}/100`;
+        
+        document.getElementById('opponent-health-ai').style.width = `${(this.opponentHealth / 100) * 100}%`;
+        document.getElementById('opponent-health-text-ai').textContent = `${this.opponentHealth}/100`;
+        
+        const turnText = this.currentTurn === 'player' ? '당신의 턴' : 'AI의 턴';
+        document.getElementById('turn-indicator-ai').textContent = turnText;
+
+        if (this.playerHealth <= 0) {
+            this.endGame(false);
+        } else if (this.opponentHealth <= 0) {
+            this.endGame(true);
         }
     }
 

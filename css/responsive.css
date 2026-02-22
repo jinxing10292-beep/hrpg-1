@@ -1,0 +1,550 @@
+/* 태블릿 (768px 이상) */
+@media (max-width: 1024px) {
+    .auth-container {
+        max-width: 90%;
+        padding: 32px;
+    }
+
+    .main-header {
+        padding: 12px 16px;
+    }
+
+    .player-info {
+        gap: 12px;
+    }
+
+    .player-name {
+        font-size: 14px;
+    }
+
+    .player-level {
+        font-size: 11px;
+        padding: 3px 10px;
+    }
+
+    .menu-container h2 {
+        font-size: 24px;
+        margin-bottom: 24px;
+    }
+
+    .btn-large {
+        padding: 14px;
+        font-size: 14px;
+    }
+
+    .card {
+        padding: 5px;
+        min-height: 65px;
+        font-size: 9px;
+    }
+
+    .card-icon {
+        font-size: 24px;
+    }
+
+    .card-stats {
+        font-size: 7px;
+    }
+
+    .card-stat-label {
+        font-size: 6px;
+    }
+
+    .card-stat-value {
+        font-size: 7px;
+    }
+
+    .card-cost {
+        width: 14px;
+        height: 14px;
+        font-size: 7px;
+    }
+
+    .game-actions {
+        gap: 6px;
+        padding: 6px;
+    }
+
+    .btn-action {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+
+    .toast {
+        max-width: 250px;
+        padding: 12px;
+    }
+
+    .modal-content {
+        padding: 24px;
+        width: 95%;
+    }
+}
+
+/* 모바일 (480px 이상) */
+@media (max-width: 768px) {
+    .auth-container {
+        max-width: 95%;
+        padding: 24px;
+        margin: 20px;
+    }
+
+    .auth-container h1 {
+        font-size: 24px;
+    }
+
+    .subtitle {
+        font-size: 12px;
+        margin-bottom: 16px;
+    }
+
+    .tab-btn {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .auth-form input {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .btn-primary {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+
+    .main-header {
+        padding: 10px 12px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .player-info {
+        gap: 10px;
+        width: 100%;
+    }
+
+    .player-name {
+        font-size: 13px;
+    }
+
+    .player-level {
+        font-size: 10px;
+        padding: 2px 8px;
+    }
+
+    .header-actions {
+        gap: 10px;
+    }
+
+    .icon-btn {
+        font-size: 18px;
+        padding: 6px;
+    }
+
+    .menu-container {
+        padding: 20px;
+    }
+
+    .menu-container h2 {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    .btn-large {
+        padding: 12px;
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+
+    .game-1v1-container {
+        padding: 8px;
+        gap: 8px;
+    }
+
+    .opponent-hand-area {
+        gap: 6px;
+    }
+
+    .opponent-info {
+        padding: 6px;
+        gap: 3px;
+    }
+
+    .opponent-name {
+        font-size: 12px;
+    }
+
+    .health-bar {
+        height: 14px;
+    }
+
+    .health-text {
+        font-size: 10px;
+    }
+
+    .center-field {
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .field-row {
+        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+        min-height: 70px;
+        gap: 6px;
+        padding: 6px;
+    }
+
+    .turn-indicator {
+        font-size: 11px;
+        padding: 4px;
+    }
+
+    .card {
+        padding: 4px;
+        min-height: 60px;
+        font-size: 8px;
+    }
+
+    .card-icon {
+        font-size: 20px;
+        margin-bottom: 1px;
+    }
+
+    .card-name {
+        margin-bottom: 1px;
+        font-size: 8px;
+    }
+
+    .card-stats {
+        font-size: 7px;
+        gap: 1px;
+    }
+
+    .card-stat-label {
+        font-size: 6px;
+    }
+
+    .card-stat-value {
+        font-size: 7px;
+    }
+
+    .card-cost {
+        width: 14px;
+        height: 14px;
+        font-size: 7px;
+        top: 1px;
+        right: 1px;
+    }
+
+    .hand-stack {
+        min-height: 70px;
+        padding: 6px;
+    }
+
+    .hand-stack .card:nth-child(1) {
+        transform: translateX(-25px) rotate(-12deg);
+    }
+
+    .hand-stack .card:nth-child(2) {
+        transform: translateX(-12px) rotate(-6deg);
+    }
+
+    .hand-stack .card:nth-child(3) {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    .hand-stack .card:nth-child(4) {
+        transform: translateX(12px) rotate(6deg);
+    }
+
+    .hand-stack .card:nth-child(5) {
+        transform: translateX(25px) rotate(12deg);
+    }
+
+    .player-hand-area {
+        gap: 6px;
+    }
+
+    .game-actions {
+        gap: 6px;
+        padding: 6px;
+        flex-direction: column;
+    }
+
+    .btn-action {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+
+    .toast-container {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+    }
+
+    .toast {
+        max-width: 100%;
+        padding: 12px;
+        font-size: 12px;
+    }
+
+    .modal-overlay {
+        padding: 20px;
+    }
+
+    .modal-content {
+        padding: 20px;
+        width: 100%;
+        max-height: 90vh;
+    }
+
+    .modal-close {
+        font-size: 20px;
+    }
+
+    /* 1v1v1 게임 화면 */
+    .game-1v1v1-container {
+        padding: 8px;
+        gap: 8px;
+    }
+
+    .opponent-area {
+        padding: 6px;
+        gap: 6px;
+    }
+
+    .center-field-3p {
+        padding: 8px;
+        gap: 8px;
+    }
+
+    .player-area-3p {
+        gap: 6px;
+    }
+}
+
+/* 소형 모바일 (480px 이하) */
+@media (max-width: 480px) {
+    .auth-container {
+        max-width: 100%;
+        padding: 20px;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .auth-container h1 {
+        font-size: 20px;
+    }
+
+    .subtitle {
+        font-size: 11px;
+        margin-bottom: 12px;
+    }
+
+    .tab-btn {
+        padding: 8px;
+        font-size: 11px;
+    }
+
+    .auth-form input {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .btn-primary {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+
+    .main-header {
+        padding: 8px 10px;
+    }
+
+    .player-name {
+        font-size: 12px;
+    }
+
+    .player-level {
+        font-size: 9px;
+        padding: 2px 6px;
+    }
+
+    .icon-btn {
+        font-size: 16px;
+        padding: 4px;
+    }
+
+    .menu-container {
+        padding: 16px;
+    }
+
+    .menu-container h2 {
+        font-size: 18px;
+        margin-bottom: 12px;
+    }
+
+    .btn-large {
+        padding: 10px;
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+
+    .game-1v1-container {
+        padding: 6px;
+        gap: 6px;
+    }
+
+    .opponent-hand-area {
+        gap: 4px;
+    }
+
+    .opponent-info {
+        padding: 4px;
+        gap: 2px;
+    }
+
+    .opponent-name {
+        font-size: 11px;
+    }
+
+    .health-bar {
+        height: 12px;
+    }
+
+    .health-text {
+        font-size: 9px;
+    }
+
+    .center-field {
+        gap: 6px;
+        padding: 6px;
+    }
+
+    .field-row {
+        grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
+        min-height: 60px;
+        gap: 4px;
+        padding: 4px;
+    }
+
+    .turn-indicator {
+        font-size: 10px;
+        padding: 3px;
+    }
+
+    .card {
+        padding: 3px;
+        min-height: 55px;
+        font-size: 7px;
+    }
+
+    .card-icon {
+        font-size: 18px;
+        margin-bottom: 1px;
+    }
+
+    .card-name {
+        margin-bottom: 1px;
+        font-size: 7px;
+    }
+
+    .card-stats {
+        font-size: 6px;
+        gap: 1px;
+    }
+
+    .card-stat-label {
+        font-size: 5px;
+    }
+
+    .card-stat-value {
+        font-size: 6px;
+    }
+
+    .card-cost {
+        width: 12px;
+        height: 12px;
+        font-size: 6px;
+    }
+
+    .hand-stack {
+        min-height: 60px;
+        padding: 4px;
+    }
+
+    .hand-stack .card:nth-child(1) {
+        transform: translateX(-20px) rotate(-10deg);
+    }
+
+    .hand-stack .card:nth-child(2) {
+        transform: translateX(-10px) rotate(-5deg);
+    }
+
+    .hand-stack .card:nth-child(3) {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    .hand-stack .card:nth-child(4) {
+        transform: translateX(10px) rotate(5deg);
+    }
+
+    .hand-stack .card:nth-child(5) {
+        transform: translateX(20px) rotate(10deg);
+    }
+
+    .player-hand-area {
+        gap: 4px;
+    }
+
+    .game-actions {
+        gap: 4px;
+        padding: 4px;
+        flex-direction: column;
+    }
+
+    .btn-action {
+        padding: 8px 10px;
+        font-size: 11px;
+    }
+
+    .toast-container {
+        top: 5px;
+        right: 5px;
+        left: 5px;
+    }
+
+    .toast {
+        padding: 10px;
+        font-size: 11px;
+        border-radius: 6px;
+    }
+
+    .modal-content {
+        padding: 16px;
+    }
+
+    .modal-close {
+        font-size: 18px;
+    }
+
+    /* 1v1v1 게임 화면 */
+    .game-1v1v1-container {
+        padding: 6px;
+        gap: 6px;
+    }
+
+    .opponent-area {
+        padding: 4px;
+        gap: 4px;
+    }
+
+    .center-field-3p {
+        padding: 6px;
+        gap: 6px;
+    }
+
+    .player-area-3p {
+        gap: 4px;
+    }
+}

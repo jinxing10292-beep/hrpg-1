@@ -86,12 +86,7 @@ class AuthManager {
 
             const data = await supabase.signUp(email, password, username);
             this.currentUser = data.user;
-            this.currentUser.profile = {
-                username,
-                level: 1,
-                experience: 0,
-                gold: 0,
-            };
+            this.currentUser.profile = data.user;
 
             showToast('회원가입 성공! 로그인되었습니다.', 'success');
             this.switchToGameScreen();
